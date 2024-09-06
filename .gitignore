@@ -1,0 +1,7 @@
+#Ignore these directories:
+.nextflow/
+learn_DSL2/.nextflow/
+
+#Ignore these files:
+.nextflow.log*
+learn_DSL2/.nextflow.log*

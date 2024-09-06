@@ -2,9 +2,9 @@
 
 nextflow.enable.dsl=2
 
-params.reads = "$projectDir/Polio_MiSeq_with_QC/FirstFive_vs_3015815424/*_R{1,2}_001.fastq"
-params.reference = "$projectDir/NCBI_Polio_reference/AY184220.1"
-params.outdir = "$projectDir/redevelop_Interm_2024"
+params.reads = "/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/../../Competency_Item_1_B_IV_2/*_R{1,2}_raw.fastq"
+params.reference = "/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/../../Competency_Item_1_B_IV_2/norovirus_reference/OL913976"
+params.outdir = "/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/../../Competency_Item_1_B_IV_2/norovirus_reference/output/"
 
 process READCOUNT {
 
