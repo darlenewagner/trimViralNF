@@ -2,15 +2,15 @@
 
 nextflow.enable.dsl=2
 
-process VeruccaSalt {
+process VerucaSalt {
    
    publishDir "$PWD/see/", mode: 'copy'
    
    output:
-     path 'see.txt'
+     path 'see_1.txt'
    
    """
-     echo 'Hello World Here. Comes Your Girl Here!' > see.txt
+     echo 'Hello World Here. Comes Your Girl Here!' > see_1.txt
    """
   
 }
@@ -19,5 +19,5 @@ process VeruccaSalt {
 
 
 workflow {
-  VeruccaSalt()
+  VerucaSalt()
 }
