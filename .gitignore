@@ -2,6 +2,8 @@
 .nextflow/
 learn_DSL2/.nextflow/
 learn_DSL2/see/
+learn_DSL2/blastn_output/
+learn_DSL2/contigs/
 Competency_Item_1_B_IV_2/
 
 #Ignore these files:
