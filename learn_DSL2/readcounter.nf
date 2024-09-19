@@ -2,31 +2,30 @@
 
 nextflow.enable.dsl=2
 
-// params.reads = "$PWD/../../Competency_Item_1_B_IV_2/*_R{1,2}_raw.fastq"
-params.reference = "$baseDir/../../Competency_Item_1_B_IV_2/norovirus_reference/OL913976"
-params.outdir = "$baseDir/../../Competency_Item_1_B_IV_2/norovirus_reference/output/"
+process READCOUNT{
 
-process READCOUNT {
-
-//    tag { see }
-    publishDir '$baseDir/../../Competency_Item_1_B_IV_2/norovirus_reference/output/', mode: 'copy', overwrite: true
+    publishDir "$PWD/see/", mode: 'copy'
 
     input:
     tuple val(sample_name), path(reads)
 
     output:
-    tuple val(sample_name), path(*.txt)
+    tuple val(sample_name), path("list.txt")
 
     script:
     """
-    ls $sample_name
+    echo "${sample_name}"_R1.fastq > "list.txt"
+    echo "${sample_name}"_R2.fastq >> "list.txt"
+    awk '{s++}END{print s/4}' "${sample_name}"_R1.fastq >> "list.txt"
+    awk '{s++}END{print s/4}' "${sample_name}"_R2.fastq >> "list.txt"
     """
 }
 
 workflow {
-    channel
-        .fromFilePairs("$baseDir/../../Competency_Item_1_B_IV_2/*_R{1,2}_raw.fastq", checkIfExists: true)
-	.set{read_pairs_ch}
+
+    read_pairs_ch = Channel.fromFilePairs("$PWD/fastq/*_R{1,2}.fastq", checkIfExists: true)
+    
+    read_pairs_ch.view()
 	
     READCOUNT(read_pairs_ch)
 
