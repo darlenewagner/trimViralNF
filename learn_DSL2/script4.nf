@@ -11,12 +11,12 @@ process get_contigs{
   path fasta
 
   output:
-  path 'headers.txt'
+  path 'headers.fasta.txt'
 
   script:
     def all = fasta.collect { it }.join(' ')
      """
-       head -1 ${fasta} > headers.txt
+       head -1 ${fasta} > headers.fasta.txt
      """
 
 }
@@ -26,15 +26,15 @@ process get_blastOut{
   publishDir "$PWD/see/", mode: 'copy'
 
   input:
-  path fastq
+  path blastout
   
   output:
-  path 'top.txt'
+  path 'top.blastout.txt'
   
   script:
-  def all = fastq.collect { it }.join(' ')
+  def all = blastout.collect { it }.join(' ')
   """
-    head -1 ${fastq} > top.txt
+    head -1 ${blastout} > top.blastout.txt
   """
 
 }
@@ -49,8 +49,8 @@ workflow
     
     get_contigs(file_channel_1) | view
     
-    params.blastOut = ['/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/fastq/Noro_sample_5_S13_trimmomatic_R1.fastq',
-  		    '/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/fastq/Noro_sample_5_S13_trimmomatic_R2.fastq']
+    params.blastOut = ['/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/blastn_output/Noro_sample_5_to_OL913976.blastn.txt',
+  		    '/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/blastn_output/Noro-sample-5_to_OL913976.blastn.txt']
     
     file_channel_2 = Channel.from(params.blastOut) | collect | view
     
