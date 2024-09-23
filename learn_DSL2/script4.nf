@@ -34,7 +34,7 @@ process get_blastOut{
   script:
   def all = blastout.collect { it }.join(' ')
   """
-    head -1 ${blastout} > top.blastout.txt
+    cat ${blastout} | awk 'split(\$0,a," "); {print a[1] "\\t" a[2] "\\n"}' >> top.blastout.txt
   """
 
 }
