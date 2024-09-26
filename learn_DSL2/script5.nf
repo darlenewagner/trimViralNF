@@ -11,12 +11,12 @@ process get_contigs{
   path fasta
 
   output:
-  path 'headers.fasta.txt'
+  path 'headers2.fasta.txt'
 
   script:
     def all = fasta.collect { it }.join(' ')
      """
-       head -1 ${fasta} > headers.fasta.txt
+       head -1 ${fasta} > headers2.fasta.txt
      """
 
 }
@@ -29,12 +29,13 @@ process get_blastOut{
   path blastout
   
   output:
-  path 'top.blastout.txt'
+  path 'top2.blastout.txt'
   
   script:
   def all = blastout.collect { it }.join(' ')
   """
-    cat ${blastout} | awk 'split(\$0,a," "){print a[8] "\\t" a[9] "\\n"}' >> top.blastout.txt
+    VAR1=\$(cat ${blastout} | awk 'split(\$0,a," "){print a[8]}')
+    echo \$VAR1 > top2.blastout.txt
   """
 
 }
