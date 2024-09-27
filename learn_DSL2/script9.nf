@@ -9,16 +9,15 @@ process gatherFiles {
 
   input:
   tuple path(blastn), path(contigs)
-
   
   output:
-  stdout
+  path "${contigs.simpleName}_annot.fasta"
   
   script:
   """
-    head -1 ${contigs} | awk '{ printf "%s ", \$0}'
+    head -1 ${contigs} | awk '{ printf "%s ", \$0}' >> ${contigs.simpleName}_annot.fasta
     VAR2=\$(cat ${blastn} | awk 'split(\$0,a," "){ gsub(/^[ \t]+|[ \t]+\$/, ""); print a[8] "_" a[9]}')
-    echo \$VAR2
+    echo \$VAR2 >> ${contigs.simpleName}_annot.fasta
   """
 
 } 
@@ -40,5 +39,6 @@ workflow
 			    .transpose( by: 2 )
 			    .map { trimmed, blastn, fasta -> tuple(blastn, fasta)}.view()
       
-     gatherFiles(file_channel_2) | view
+     gatherFiles(file_channel_2) | collect | view
+
   }
