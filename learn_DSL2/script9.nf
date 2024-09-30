@@ -11,13 +11,14 @@ process gatherFiles {
   tuple path(blastn), path(contigs)
   
   output:
-  path "${contigs.simpleName}_annot.fasta"
+  path "${contigs.simpleName}_annot.more.fasta"
   
   script:
   """
-    head -1 ${contigs} | awk '{ printf "%s ", \$0}' >> ${contigs.simpleName}_annot.fasta
+    head -1 ${contigs} | awk '{ printf "%s ", \$0}' >> ${contigs.simpleName}_annot.more.fasta
     VAR2=\$(cat ${blastn} | awk 'split(\$0,a," "){ gsub(/^[ \t]+|[ \t]+\$/, ""); print a[8] "_" a[9]}')
-    echo \$VAR2 >> ${contigs.simpleName}_annot.fasta
+    echo \$VAR2 >> ${contigs.simpleName}_annot.more.fasta
+    egrep "^(A|C|G|T)" ${contigs} >> ${contigs.simpleName}_annot.more.fasta
   """
 
 } 
