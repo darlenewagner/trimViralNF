@@ -33,10 +33,12 @@ process performTrim {
   output:
   stdout
   
-  script:
-  """
-    perl -ne 'print "Hello from performTrim.";'
-  """
+  shell:
+  '''
+  #!/usr/bin/env perl
+  use strict;
+  print "\nHello from Perl.\n";
+  '''
 }
 
 workflow
@@ -56,6 +58,8 @@ workflow
 			    .transpose( by: 2 )
 			    .map { trimmed, blastn, fasta -> tuple(blastn, fasta)}.view()
       
-     gatherFiles(file_channel_2) | collect | view
+     file_channel_3 = gatherFiles(file_channel_2) | collect | view
+
+     performTrim(file_channel_3) | view
 
   }
