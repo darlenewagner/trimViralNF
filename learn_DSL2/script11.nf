@@ -5,7 +5,7 @@ nextflow.enable.dsl=2
 
 process gatherFiles {
 
-  publishDir "$PWD/intermediate/", mode: 'copy'
+  publishDir "${params.intermediate}", mode: 'copy'
 
   input:
   tuple path(blastn), path(contigs)
@@ -25,9 +25,9 @@ process gatherFiles {
 
 process performTrim {
 
-  tag {annotated}
+  tag { annotated.name }
   
-  publishDir "$PWD/annotated/", mode: 'copy'
+  publishDir "${params.intermediate}", mode: 'copy'
   
   input:
   path(annotated)
@@ -35,12 +35,10 @@ process performTrim {
   output:
   stdout
   
-  shell:
-  '''
-  #!/usr/bin/env perl
-  use strict;
-  print "\nHello from Perl.\n";
-  '''
+  script:
+  """
+  perl $PWD/perl/trimFasta.pl ${params.intermediate}/${annotated}
+  """
 }
 
 workflow
@@ -49,6 +47,8 @@ workflow
     params.contigs = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/contigs/*.fasta"]
         
     params.blastOut = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/blastn_output/*.blastn.txt"]
+
+    params.intermediate = "$PWD/intermediate/"
    
     file_channel_1 = Channel.fromPath(params.contigs)
                             .map { tuple( it.simpleName, it) }
@@ -60,8 +60,8 @@ workflow
 			    .transpose( by: 2 )
 			    .map { trimmed, blastn, fasta -> tuple(blastn, fasta)}.view()
       
-     file_channel_3 = gatherFiles(file_channel_2) | collect | view
+     performTrim( gatherFiles(file_channel_2) ) | collect | view
 
-     performTrim(file_channel_3) | view
+     
 
   }
