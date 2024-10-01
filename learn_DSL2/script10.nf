@@ -24,9 +24,11 @@ process gatherFiles {
 } 
 
 process performTrim {
+
+  tag {annotated}
   
   input:
-  path "${contigs.simpleName}_annot.more.fasta"
+  path(annotated)
   
   output:
   stdout
@@ -47,7 +49,7 @@ workflow
     file_channel_1 = Channel.fromPath(params.contigs)
                             .map { tuple( it.simpleName, it) }
   			    .groupTuple().view()
-			     
+    			     
     file_channel_2 = Channel.fromPath(params.blastOut)
                             .map{ tuple( it.simpleName - ~/.blastn.txt/, it )}
 			    .combine( file_channel_1, by: 0 )
