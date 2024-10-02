@@ -27,17 +27,17 @@ process performTrim {
 
   tag { annotated.name }
   
-  publishDir "${params.intermediate}", mode: 'copy'
+  publishDir "${params.annote}", mode: 'copy'
   
   input:
   path(annotated)
   
   output:
-  stdout
+  path "${annotated.simpleName}_trimmed.fasta"
   
   script:
   """
-  perl $PWD/perl/trimFasta.pl ${params.intermediate}/${annotated}
+  perl $PWD/perl/trimFasta.pl ${params.intermediate}/${annotated} >> ${annotated.simpleName}_trimmed.fasta
   """
 }
 
@@ -49,7 +49,9 @@ workflow
     params.blastOut = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/blastn_output/*.blastn.txt"]
 
     params.intermediate = "$PWD/intermediate/"
-   
+
+    params.annote = "$PWD/annotated/"
+
     file_channel_1 = Channel.fromPath(params.contigs)
                             .map { tuple( it.simpleName, it) }
   			    .groupTuple().view()
