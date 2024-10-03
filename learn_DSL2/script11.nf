@@ -43,9 +43,9 @@ process performTrim {
 
 workflow
   {
-  
-    params.contigs = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/contigs/*.fasta"]
-        
+
+    /* Default Input folders: */
+    params.contigs = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/contigs/*.fasta"]    
     params.blastOut = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/blastn_output/*.blastn.txt"]
 
     params.intermediate = "$PWD/intermediate/"
@@ -63,7 +63,7 @@ workflow
 			    .map { trimmed, blastn, fasta -> tuple(blastn, fasta)}.view()
       
      performTrim( gatherFiles(file_channel_2) ) | collect | view
-
+  
      
-
+  
   }
