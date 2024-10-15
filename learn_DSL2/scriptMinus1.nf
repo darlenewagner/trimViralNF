@@ -2,7 +2,7 @@
 
 nextflow.enable.dsl=2
 
-params.query = "${baseDir}/polio_contigs/polio_sample_3.fasta"
+params.query = "${baseDir}/polio_contigs/polio_sample_10.fasta"
 params.db = "${baseDir}/blastn_db/AY184220"
 
 db_name = file(params.db).name
