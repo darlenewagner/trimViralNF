@@ -2,6 +2,31 @@
 
 nextflow.enable.dsl=2
 
+params.query = "${baseDir}/polio_contigs/polio*.fasta"
+params.db = "${baseDir}/blastn_db/AY184220"
+
+db_name = file(params.db).name
+db_path = file(params.db).parent
+
+process blastN {
+   
+   publishDir "$PWD/blastn_output/", mode: 'copy'
+
+   input:
+     tuple val(query_id), path(query)
+     path db
+     
+   output:
+     tuple val(query_id), path("${query_id}.batch_blastn.txt")
+
+ script:
+   """
+     blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-100 -outfmt "6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle" -out "${query_id}.batch_blastn.txt"
+   """
+  
+}
+
+
 
 process gatherFiles {
 
@@ -43,7 +68,12 @@ process performTrim {
 
 workflow
   {
-
+    
+    query_ch = Channel.fromPath( params.query ).map{ file -> tuple(file.baseName, file)}
+    blastResults = blastN(query_ch, db_path)
+    
+    blastResults.view { "BlastN Results: ${it}" }
+    
     /* Default Input folders: */
     params.contigs = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/polio_contigs/polio*.fasta"]    
     params.blastOut = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/blastn_output/*.batch_blastn.txt"]
@@ -57,7 +87,7 @@ workflow
   			    .groupTuple().view()
     			     
     file_channel_2 = Channel.fromPath(params.blastOut)
-                            .map{ tuple( it.simpleName - ~/.blastn.txt/, it )}
+                            .map{ tuple( it.simpleName - ~/.batch_blastn.txt/, it )}
 			    .combine( file_channel_1, by: 0 )
 			    .transpose( by: 2 )
 			    .map { trimmed, blastn, fasta -> tuple(blastn, fasta)}.view()
