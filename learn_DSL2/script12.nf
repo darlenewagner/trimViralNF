@@ -2,7 +2,7 @@
 
 nextflow.enable.dsl=2
 
-params.query = "${baseDir}/polio_contigs/polio*.fasta"
+params.query = "${baseDir}/anonymousContigs/contig*.fasta"
 params.db = "${baseDir}/blastn_db/AY184220"
 
 db_name = file(params.db).name
@@ -75,7 +75,7 @@ workflow
     blastResults.view { "BlastN Results: ${it}" }
     
     /* Default Input folders: */
-    params.contigs = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/polio_contigs/polio*.fasta"]    
+    params.contigs = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/anonymousContigs/contig*.fasta"]    
     params.blastOut = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/blastn_output/*.batch_blastn.txt"]
 
     params.intermediate = "$PWD/intermediate/"
