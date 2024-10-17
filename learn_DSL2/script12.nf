@@ -66,6 +66,29 @@ process performTrim {
   """
 }
 
+process cullEmpty {
+
+  publishDir "$PWD/annotated/", mode: 'move'
+
+  input:
+  path(trimmed)
+
+  output:
+  stdout
+  
+
+  script:
+  """
+  fileLength=\$(wc -l "${trimmed}" | cut -d\" \" -f1)
+  if [[ \$fileLength -lt 3 ]]; then
+     mv -v "$PWD/annotated/${trimmed}" "$PWD/annotated/stub.txt"
+   fi  
+  """
+  
+}
+
+
+
 workflow
   {
     
@@ -92,8 +115,8 @@ workflow
 			    .transpose( by: 2 )
 			    .map { trimmed, blastn, fasta -> tuple(blastn, fasta)}.view()
       
-     performTrim( gatherFiles(file_channel_2) ) | collect | view
-  
-     
+     file_channel_fin = performTrim( gatherFiles(file_channel_2) ) | view
+
+     cullEmpty(file_channel_fin) | view
   
   }
