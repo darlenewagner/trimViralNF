@@ -13,4 +13,3 @@ Competency_Item_1_B_IV_2/
 #Ignore these files:
 .nextflow.log*
 learn_DSL2/.nextflow.log*
-learn_DSL2/script13.nf
