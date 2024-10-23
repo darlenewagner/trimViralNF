@@ -10,7 +10,7 @@ db_path = file(params.db).parent
 
 process blastN {
    
-   publishDir "$PWD/blastn_output/", mode: 'copy'
+   publishDir "${baseDir}/blastn_output/", mode: 'copy'
 
    input:
      tuple val(query_id), path(query)
@@ -62,13 +62,13 @@ process performTrim {
   
   script:
   """
-  perl $PWD/perl/trimFasta.pl ${params.intermediate}/${annotated} >> ${annotated.simpleName}_trimmed.fasta
+  perl ${baseDir}/perl/trimFasta.pl ${params.intermediate}/${annotated} >> ${annotated.simpleName}_trimmed.fasta
   """
 }
 
 process cullEmpty {
 
-  publishDir "$PWD/annotated/", mode: 'move'
+  publishDir "${baseDir}/annotated/", mode: 'move'
 
   input:
   path(trimmed)
@@ -81,7 +81,7 @@ process cullEmpty {
   """
   fileLength=\$(wc -l "${trimmed}" | cut -d\" \" -f1)
   if [[ \$fileLength -lt 3 ]]; then
-     mv -v "$PWD/annotated/${trimmed}" "$PWD/annotated/stub.txt"
+     mv -v "${baseDir}/annotated/${trimmed}" "${baseDir}/annotated/stub.txt"
    fi  
   """
   
@@ -101,9 +101,9 @@ workflow
     params.contigs = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/anonymousContigs/contig*.fasta"]    
     params.blastOut = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/blastn_output/*.batch_blastn.txt"]
 
-    params.intermediate = "$PWD/intermediate/"
+    params.intermediate = "${baseDir}/intermediate/"
 
-    params.annote = "$PWD/annotated/"
+    params.annote = "${baseDir}/annotated/"
 
     file_channel_1 = Channel.fromPath(params.contigs)
                             .map { tuple( it.simpleName, it) }

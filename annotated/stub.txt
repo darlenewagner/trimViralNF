@@ -1,0 +1,2 @@
+>NODE_10_length_865_cov_0.092742  length=10
+GTGTTAGGGT
