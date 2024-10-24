@@ -16,9 +16,15 @@ my $DNA = '';
 
 while(<FASTA>)
 {
+    
     if($_ =~ /^>/)
     {
+	
 	my @newHeader = split(" ", $_);
+	if(scalar @newHeader < 2)
+	{
+	    exit;
+	}
 	my $trimString = scalar @newHeader - 1;
 	
 	# print $newHeader[$trimString], "\n";
