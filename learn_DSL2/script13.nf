@@ -23,7 +23,7 @@ process blastN {
 
  script:
    """
-     blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-100 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt "6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle" -out "${query_id}.batch_blastn.txt"
+     blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-100 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt "6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle" | sort -nk8 > "${query_id}.batch_blastn.txt"
    """
   
 }
@@ -43,9 +43,10 @@ process gatherFiles {
   script:
   """
     head -1 ${contigs} | awk '{ printf "%s ", \$0}' >> ${contigs.simpleName}_annot.more.fasta
-    VAR2=\$(head -1 ${blastn} | awk 'split(\$0,a," "){ gsub(/^[ \t]+|[ \t]+\$/, ""); print a[8] "_" a[9]}')
-    VAR3=\$(tail -1 ${blastn} | awk 'split(\$0,a," "){ gsub(/^[ \t]+|[ \t]+\$/, ""); print a[8] "_" a[9]}')
-    echo \$VAR2 >> ${contigs.simpleName}_annot.more.fasta
+    VAR2=\$(head -1 ${blastn} | awk 'split(\$0,a," "){ gsub(/^[ \t]+|[ \t]+\$/, ""); print a[8] "_"}')
+    VAR3=\$(tail -1 ${blastn} | awk 'split(\$0,b," "){ gsub(/^[ \t]+|[ \t]+\$/, ""); print b[9]}')
+    echo -n \$VAR2 >> ${contigs.simpleName}_annot.more.fasta
+    echo \$VAR3 >> ${contigs.simpleName}_annot.more.fasta
     egrep "^(A|C|G|T)" ${contigs} >> ${contigs.simpleName}_annot.more.fasta
   """
 } 
