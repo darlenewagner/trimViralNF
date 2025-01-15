@@ -9,7 +9,11 @@ learn_DSL2/noro_*/
 learn_DSL2/fastq/
 learn_DSL2/intermediate/
 learn_DSL2/annotated/
+learn_DSL2/blastn_db/
 Competency_Item_1_B_IV_2/
+intermediate/
+annotated/
+old_DSL1/
 
 #Ignore these files:
 .nextflow.log*
