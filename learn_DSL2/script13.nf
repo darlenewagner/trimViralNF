@@ -23,7 +23,7 @@ process blastN {
 
  script:
    """
-     blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-100 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt "6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle" | sort -nk8 > "${query_id}.batch_blastn.txt"
+     blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-90 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt "6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle" | sort -nk8 > "${query_id}.batch_blastn.txt"
    """
   
 }
