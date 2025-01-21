@@ -14,6 +14,9 @@ Competency_Item_1_B_IV_2/
 intermediate/
 annotated/
 old_DSL1/
+blastn_output/
+messy_contigs/
+work/
 
 #Ignore these files:
 .nextflow.log*
