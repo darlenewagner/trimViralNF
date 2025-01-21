@@ -8,7 +8,7 @@ print "Creating folders, annotated\/, intermediate\/, messy_contigs\/, and blast
 
 sleep(1);
 
-print "The current permissions are: ", umask(), "\n";
+#print "The current permissions are: ", umask(), "\n";
 
 if(-d $current_dir."\/annotated/")
   { 
@@ -16,7 +16,7 @@ if(-d $current_dir."\/annotated/")
   }
 else
   {
-      mkdir $current_dir."\/annotated/";
+      if(mkdir $current_dir."\/annotated/"){ print "Created annotated\/\n"; } else { warn "Unable to create annotated\/\n";}
       chmod 0755, $current_dir."\/annotated/";
   }
 
@@ -28,7 +28,7 @@ if(-d $current_dir."\/intermediate")
   }
 else
   {
-      mkdir $current_dir."\/intermediate";
+      if(mkdir $current_dir."\/intermediate"){ print "Created intermediate\/\n"; } else { warn "Unable to create intermediate\/\n";}
       chmod 0755, $current_dir."\/intermediate";
   }
 
@@ -40,7 +40,7 @@ if(-d $current_dir."\/messy_contigs/")
   }
 else
   {
-      mkdir $current_dir."\/messy_contigs/";
+      if(mkdir $current_dir."\/messy_contigs/"){ print "Created messy_contigs\/\n"; } else { warn "Unable to create messy_contigs\/\n";}
       chmod 0755, $current_dir."\/messy_contigs/";
   }
 
@@ -52,11 +52,23 @@ if(-d $current_dir."\/blastn_output/")
   }
 else
   {
-      mkdir $current_dir."\/blastn_output/";
+      if(mkdir $current_dir."\/blastn_output/"){ print "Created blastn_output\/\n"; } else { warn "Unable to create blastn_output\/\n";}
       chmod 0755, $current_dir."\/blastn_output/";
   }
 
 sleep(1);
+
+if(-e $current_dir."\/test_genomes.tar")
+  {
+      system("tar xvf test_genomes.tar");
+      system("mv -v test_genomes\/*.fasta messy_contigs\/")
+  }
+else
+ {
+     warn "Archive, test_genomes.tar, not found.";
+  }
+
+
 
 exit;
 
