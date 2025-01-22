@@ -16,6 +16,7 @@ annotated/
 old_DSL1/
 blastn_output/
 messy_contigs/
+anonymousContigs/
 work/
 
 #Ignore these files:

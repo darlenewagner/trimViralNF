@@ -4,8 +4,8 @@ nextflow.enable.dsl=2
 
 // Assume each contig*.fasta has only one fasta-formatted nucleotide sequence
 
-params.query = "${baseDir}/anonymousContigs/contig*.fasta"
-params.db = "${baseDir}/blastn_db/AY184220"
+params.query = "${baseDir}/anonymousContigs/contig*.fasta"    
+params.db = "${baseDir}/blastn_db/poliovirus/MZ245455"
 
 db_name = file(params.db).name
 db_path = file(params.db).parent
@@ -100,15 +100,13 @@ workflow
     
     blastResults.view { "BlastN Results: ${it}" }
     
-    /* Default Input folders: */
-    params.contigs = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/anonymousContigs/contig*.fasta"]    
-    params.blastOut = ["/scicomp/home-pure/ydn3/trimViralNF/learn_DSL2/blastn_output/*.batch_blastn.txt"]
-
+    /* Default Intermediate Folders: */
+    params.blastOut = ["/scicomp/home-pure/ydn3/trimViralNF/blastn_output/*.batch_blastn.txt"]
     params.intermediate = "${baseDir}/intermediate/"
-
     params.annote = "${baseDir}/annotated/"
 
-    file_channel_1 = Channel.fromPath(params.contigs)
+    /* File Channels */
+    file_channel_1 = Channel.fromPath(params.query)
                             .map { tuple( it.simpleName, it) }
   			    .groupTuple().view()
     			     
