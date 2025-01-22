@@ -18,7 +18,7 @@ while(<FASTA>)
       $name[$i] = substr($_, 1, $cc - 1);
       my $file2 = $name[$i].".fasta";
       $i++;
-      open DAT, '>>', $file2;
+      open DAT, '>>', "anonymousContigs/$file2" or die "Can't open anonymousContigs/$file2\n";
       printf DAT $_;
      
    }
