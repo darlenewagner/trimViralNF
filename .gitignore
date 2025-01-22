@@ -17,6 +17,7 @@ old_DSL1/
 blastn_output/
 messy_contigs/
 anonymousContigs/
+test_genomes/
 work/
 
 #Ignore these files:
