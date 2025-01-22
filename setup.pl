@@ -34,14 +34,14 @@ else
 
 sleep(1);
 
-if(-d $current_dir."\/messy_contigs/")
+if(-d $current_dir."\/anonymousContigs/")
   { 
-     warn "Folder 'messy_contigs\/' already exists.\n";
+     warn "Folder 'anonymousContigs\/' already exists.\n";
   }
 else
   {
-      if(mkdir $current_dir."\/messy_contigs/"){ print "Created messy_contigs\/\n"; } else { warn "Unable to create messy_contigs\/\n";}
-      chmod 0755, $current_dir."\/messy_contigs/";
+      if(mkdir $current_dir."\/anonymousContigs/"){ print "Created anonymousContigs\/\n"; } else { warn "Unable to create anonymousContigs\/\n";}
+      chmod 0755, $current_dir."\/anonymousContigs/";
   }
 
 sleep(1);
@@ -61,7 +61,7 @@ sleep(1);
 if(-e $current_dir."\/test_genomes.tar")
   {
       system("tar xvf test_genomes.tar");
-      system("mv -v test_genomes\/*.fasta messy_contigs\/")
+     ## system("mv -v test_genomes\/*.fasta messy_contigs\/")
   }
 else
  {
