@@ -12,6 +12,8 @@ db_path = file(params.db).parent
 
 process blastN {
    
+//   container "https://depot.galaxyproject.org/singularity/blast:2.14.1--pl5321h6f7f691_0"
+   
    publishDir "${baseDir}/blastn_output/", mode: 'copy'
 
    input:
@@ -27,7 +29,6 @@ process blastN {
    """
   
 }
-
 
 
 process gatherFiles {
@@ -94,6 +95,9 @@ process cullEmpty {
 
 workflow
   {
+   
+//  blastDB() | view
+  
     
     query_ch = Channel.fromPath( params.query ).map{ file -> tuple(file.baseName, file)}
     blastResults = blastN(query_ch, db_path)
@@ -110,7 +114,7 @@ workflow
                             .map { tuple( it.simpleName, it) }
   			    .groupTuple().view()
     			     
-    file_channel_2 = Channel.fromPath(params.blastOut)
+   file_channel_2 = Channel.fromPath(params.blastOut)
                             .map{ tuple( it.simpleName - ~/.batch_blastn.txt/, it )}
 			    .combine( file_channel_1, by: 0 )
 			    .transpose( by: 2 )
