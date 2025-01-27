@@ -5,6 +5,10 @@ use strict;
 
 my $file = $ARGV[0];
 
+if($file !~ /(\.fasta|\.fa|\.fna)$/){
+    die "Input file must be fasta-formatted ending in .fasta, fa, or .fna $!"
+  }
+
 open(FASTA, '<', $file) || die "Can't find fasta file, $file $!";
 
 my @name = ();

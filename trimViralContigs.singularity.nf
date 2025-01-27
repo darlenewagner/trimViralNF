@@ -1,4 +1,5 @@
-#! /apps/x86_64/nextflow/23.10.0 nextflow
+//#! /apps/x86_64/nextflow/24.04.2 nextflow
+// container "https://depot.galaxyproject.org/singularity/nextflow:24.04.2--hdfd78af_0"
 
 nextflow.enable.dsl=2
 
@@ -25,7 +26,7 @@ process blastN {
 
  script:
    """
-     blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-90 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt "6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle" | sort -nk8 > "${query_id}.batch_blastn.txt"
+     /usr/bin/singularity exec depot.galaxyproject.org-singularity-blast-2.14.1--pl5321h6f7f691_0.img.pulling.1738001118568 blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-90 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt "6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle" | sort -nk8 > "${query_id}.batch_blastn.txt"
    """
   
 }
@@ -75,6 +76,8 @@ process gatherFiles {
 
 process performTrim {
 
+ // container "https://depot.galaxyproject.org/singularity/perl:5.32"
+  
   tag { annotated.name }
   
   publishDir "${params.annote}", mode: 'copy'
@@ -87,7 +90,7 @@ process performTrim {
   
   script:
   """
-  perl ${baseDir}/perl/trimFasta.pl ${params.intermediate}/${annotated} >> ${annotated.simpleName}_trimmed.fasta
+   /usr/bin/singularity exec my_perl.sif perl ${baseDir}/perl/trimFasta.pl ${params.intermediate}/${annotated} >> ${annotated.simpleName}_trimmed.fasta
   """
 }
 

@@ -23,3 +23,5 @@ work/
 #Ignore these files:
 .nextflow.log*
 learn_DSL2/.nextflow.log*
+nextflow:24.04.2--hdfd78af_0
+perl:5.32
