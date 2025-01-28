@@ -13,7 +13,7 @@ db_path = file(params.db).parent
 
 process blastN {
    
-   container "https://depot.galaxyproject.org/singularity/blast:2.14.1--pl5321h6f7f691_0"
+  // container "https://depot.galaxyproject.org/singularity/blast:2.14.1--pl5321h6f7f691_0"
    
    publishDir "${baseDir}/blastn_output/", mode: 'copy'
 
@@ -23,10 +23,11 @@ process blastN {
      
    output:
      tuple val(query_id), path("${query_id}.batch_blastn.txt")
+     
 
  script:
    """
-     /usr/bin/singularity exec depot.galaxyproject.org-singularity-blast-2.14.1--pl5321h6f7f691_0.img.pulling.1738001118568 blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-90 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt "6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle" | sort -nk8 > "${query_id}.batch_blastn.txt"
+     singularity -s exec my_blast_2.14.1.sif blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-90 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt \"6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle\" | sort -nk8 > "${query_id}.batch_blastn.txt"
    """
   
 }
@@ -90,7 +91,7 @@ process performTrim {
   
   script:
   """
-   /usr/bin/singularity exec my_perl.sif perl ${baseDir}/perl/trimFasta.pl ${params.intermediate}/${annotated} >> ${annotated.simpleName}_trimmed.fasta
+   singularity -s exec my_perl.sif perl ${baseDir}/perl/trimFasta.pl ${params.intermediate}/${annotated} >> ${annotated.simpleName}_trimmed.fasta
   """
 }
 
