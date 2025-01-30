@@ -27,7 +27,7 @@ process blastN {
 
  script:
    """
-     singularity -s exec my_blast_2.14.1.sif blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-90 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt \"6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle\" | sort -nk8 > "${query_id}.batch_blastn.txt"
+     singularity exec ${baseDir}/my_blast_2.14.1.sif blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-90 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt \"6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle\"  -out "${query_id}.batch_blastn.txt"
    """
   
 }
@@ -91,7 +91,7 @@ process performTrim {
   
   script:
   """
-   singularity -s exec my_perl.sif perl ${baseDir}/perl/trimFasta.pl ${params.intermediate}/${annotated} >> ${annotated.simpleName}_trimmed.fasta
+   singularity -s exec ${baseDir}/my_perl.sif perl ${baseDir}/perl/trimFasta.pl ${params.intermediate}/${annotated} >> ${annotated.simpleName}_trimmed.fasta
   """
 }
 
