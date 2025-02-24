@@ -78,7 +78,16 @@ if($? == 0)
 }
 else
 {
-    print "Nextflow executable or path not found!\nExit status: $?\n";
+    system("module load nextflow/24.10.4");
+    $nextflowy = `which nextflow`;
+    if($? == 0)
+    {
+	print "Found nextflow path: $nextflowy\n";
+    }
+    else
+    {
+        print "Nextflow executable or path not found!\nExit status: $?\n";
+    }
 }
 
 
