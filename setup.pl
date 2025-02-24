@@ -69,6 +69,11 @@ else
   }
 
 
+system("which perl");
+
+system("which nextflow");
+
+system("which blastn");
 
 exit;
 
