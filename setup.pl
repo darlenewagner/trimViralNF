@@ -68,12 +68,21 @@ else
      warn "Archive, test_genomes.tar, not found.";
   }
 
+##system("which perl");
 
-system("which perl");
+my $nextflowy = `which nextflow`;
 
-system("which nextflow");
+if($? == 0)
+{
+    print "Found nextflow path: $nextflowy\n";
+}
+else
+{
+    print "Nextflow executable or path not found!\nExit status: $?\n";
+}
 
-system("which blastn");
+
+#system("which blastn");
 
 exit;
 
