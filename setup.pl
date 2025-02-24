@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Cwd;
+use local::lib;
 require "/usr/share/lmod/lmod/init/perl";
 #use IPC::System::Simple qw( system );
 
@@ -80,11 +81,13 @@ if($? == 0)
 }
 else
 {
-    module("load nextflow");
+    module("load nextflow/24.04.2");
     $nextflowy = `which nextflow`;
     if($? == 0)
     {
 	print "Found nextflow path: $nextflowy\n";
+	my $see = `/usr/share/lmod/lmod/libexec/lmod perl load nextflow/24.10.4`;
+	    system("$see");
     }
     else
     {
@@ -96,7 +99,5 @@ else
 #system("which blastn");
 
 exit;
-
-
 
 
