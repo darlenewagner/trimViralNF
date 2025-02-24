@@ -1,7 +1,9 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 use strict;
 use warnings;
 use Cwd;
+require "/usr/share/lmod/lmod/init/perl";
+#use IPC::System::Simple qw( system );
 
 my $current_dir = getcwd;
 print "Creating folders, annotated\/, intermediate\/, messy_contigs\/, and blastn_output\/ in ",  $current_dir, ".\n";
@@ -78,7 +80,7 @@ if($? == 0)
 }
 else
 {
-    system("module load nextflow/24.10.4");
+    module("load nextflow");
     $nextflowy = `which nextflow`;
     if($? == 0)
     {
