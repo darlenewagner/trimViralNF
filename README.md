@@ -1,5 +1,11 @@
 ### Requires nextflow version 23.10.0 or higher
 
+#### Simple setup
+`module load perl/5.30.1`
+##### Perl version 5.30 or higher recommended
+`perl setup.pl`
+
+
 #### Example with all prerequisites available on server:
 ` nextflow run trimViralContigs.nf --query "$PWD/anonymousContigs/*.fasta" --db "$PWD/blastn_db/poliovirus/MZ245455" --annot "$PWD/annotated/" --intermediate "$PWD/intermediate/"`
 
