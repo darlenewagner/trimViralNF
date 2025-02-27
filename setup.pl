@@ -81,13 +81,14 @@ if($? == 0)
 }
 else
 {
-    module("load nextflow/24.04.2");
+    #module("load nextflow/24.04.2");
+    system("./moduleWrapper.sh");
     $nextflowy = `which nextflow`;
     if($? == 0)
     {
 	print "Found nextflow path: $nextflowy\n";
-	my $see = `/usr/share/lmod/lmod/libexec/lmod perl load nextflow/24.10.4`;
-	    system("$see");
+	#my $see = `/usr/share/lmod/lmod/libexec/lmod perl load nextflow/24.10.4`;
+	#    system("$see");
     }
     else
     {

@@ -1,5 +1,5 @@
 #!/usr/bin/bash
 
-module load nextflow/24.04.2
+ echo "export PATH=$PATH:/apps/x86_64/bio/nextflow/24.10.4/" > ~/.bash.d/nextflow.bash
+ echo "alias llA='ll nextflow'" >> ~/.bash.d/nextflow.bash
 
-module load blast+/2.13.0
