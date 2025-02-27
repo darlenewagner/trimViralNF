@@ -1,9 +1,11 @@
 ### Requires nextflow version 23.10.0 or higher
 
-#### Simple setup
-`module load perl/5.30.1`
-##### Perl version 5.30 or higher recommended
-`perl setup.pl`
+#### Exact path to prerequisites setup
+`./moduleWrapper.sh`
+
+`source ~/.bash.d/nextflow.bash`
+
+##### Note that paths to executables in 'moduleWrapper.sh' may need editing
 
 
 #### Example with all prerequisites available on server:
