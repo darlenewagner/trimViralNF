@@ -1,10 +1,7 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 use strict;
 use warnings;
 use Cwd;
-use local::lib;
-require "/usr/share/lmod/lmod/init/perl";
-#use IPC::System::Simple qw( system );
 
 my $current_dir = getcwd;
 print "Creating folders, annotated\/, intermediate\/, messy_contigs\/, and blastn_output\/ in ",  $current_dir, ".\n";
@@ -61,6 +58,18 @@ else
 
 sleep(1);
 
+if(-d $current_dir."\/messy_contigs/")
+  {
+       warn "Folder 'blastn_output\/' already exists.\n";
+  }
+else
+ {
+       if(mkdir $current_dir."\/messy_contigs/"){ print "Created messy_contigs\/\n"; } else { warn "Unable to create messy_contigs\/\n";}
+       chmod 0755, $current_dir."\/messy_contigs/";
+ }
+
+sleep(1);
+
 if(-e $current_dir."\/test_genomes.tar")
   {
       system("tar xvf test_genomes.tar");
@@ -71,9 +80,9 @@ else
      warn "Archive, test_genomes.tar, not found.";
   }
 
-##system("which perl");
 
 my $nextflowy = `which nextflow`;
+
 
 if($? == 0)
 {
@@ -97,8 +106,8 @@ else
 }
 
 
-#system("which blastn");
-
 exit;
+
+
 
 
