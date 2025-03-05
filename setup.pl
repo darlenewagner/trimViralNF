@@ -93,7 +93,7 @@ if($? == 0)
 }
 else
 {
-    #module("load nextflow/24.04.2");
+    
     system("./moduleWrapper.sh");
     $nextflowy = `which nextflow`;
     if($? == 0)
@@ -108,6 +108,12 @@ else
     }
 }
 
+my $blasty = `which blastn`;
+
+if($? == 0)
+{
+    print "Found blastn path: $blasty\n";
+}
 
 exit;
 
