@@ -6,8 +6,8 @@ use Cwd;
 my $current_dir = getcwd;
 print "Creating folders, annotated\/, intermediate\/, messy_contigs\/, and blastn_output\/ in ",  $current_dir, ".\n";
 sleep(1);
-print "This script also validates paths to nextflow and blastn executables.";
-print "To install nextflow and blastn, run './moduleWrapper.sh' followed by 'source ~/.bash.d/nextflow.bash'";
+print "This script also loads paths to nextflow and blastn executables per user-specific paths.\n";
+
 
 sleep(1);
 
@@ -83,6 +83,8 @@ else
      warn "Archive, test_genomes.tar, not found.";
   }
 
+
+print "To install nextflow and blastn, type at command line: 'source ~/.bash.d/nextflow.bash'\n";
 
 #my $nextflowy = `which nextflow`;
 
