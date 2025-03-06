@@ -84,39 +84,44 @@ else
   }
 
 
-my $nextflowy = `which nextflow`;
+#my $nextflowy = `which nextflow`;
 
-
-if($? == 0)
-{
-    print "Found nextflow path: $nextflowy\n";
-}
-else
-{
+#if($? == 0)
+#{
+#    print "Found nextflow path: $nextflowy\n";
+#}
+#else
+#{
+#    system("./moduleWrapper.sh");
+#    sleep(1);
+#    my $see = "source ~/.bash.d/nextflow.bash\n";
+#    print $see;
+#}    
+#    sleep(1);
     
-    system("./moduleWrapper.sh");
-    $nextflowy = `which nextflow`;
-    if($? == 0)
-    {
-	print "Found nextflow path: $nextflowy\n";
+#    $nextflowy = `which nextflow`;
+#    if($? == 0)
+#    {
+#	print "Found nextflow path: $nextflowy\n";
 	#my $see = `/usr/share/lmod/lmod/libexec/lmod perl load nextflow/24.10.4`;
 	#    system("$see");
-    }
-    else
-    {
-        print "Nextflow executable or path not found!\nExit status: $?\n";
-    }
-}
+#    }
+#    else
+#    {
+#        print "Nextflow executable or path not found!\nExit status: $?\n";
+#    }
+#}
 
-my $blasty = `which blastn`;
+#my $blasty = `which blastn`;
 
-if($? == 0)
-{
-    print "Found blastn path: $blasty\n";
-}
+#if($? == 0)
+#{
+#    print "Found blastn path: $blasty\n";
+#}
+#else
+#{
+#    print "NCBI blastn executable or path not found!\nExit status: $?\n";
+#}
 
 exit;
-
-
-
 
