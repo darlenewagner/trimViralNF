@@ -10,6 +10,7 @@ params.db = "${baseDir}/blastn_db/poliovirus/MZ245455"
 
 db_name = file(params.db).name
 db_path = file(params.db).parent
+//queryID = file(params.query).name
 
 process blastN {
    
@@ -27,7 +28,7 @@ process blastN {
 
  script:
    """
-     singularity exec ${baseDir}/my_blast_2.14.1.sif blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-90 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt \"6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle\"  -out "${query_id}.batch_blastn.txt"
+     singularity exec ${baseDir}/my_blast.sif blastn -db "${db}/${db_name}" -query "${query}" -evalue 1e-90 -gapopen 2 -gapextend 2 -reward 2 -penalty -3 -outfmt \"6 qseqid pident length qlen slen mismatch gapopen qstart qend sstart send evalue bitscore stitle\"  -out "${query_id}.batch_blastn.txt"
    """
   
 }
@@ -130,7 +131,7 @@ workflow
     blastResults.view { "BlastN Results: ${it}" }
     
     /* Default Intermediate Folders: */
-    params.blastOut = ["/scicomp/home-pure/ydn3/trimViralNF/blastn_output/*.batch_blastn.txt"]
+    params.blastOut = "${baseDir}/blastn_output/*.batch_blastn.txt"
     params.intermediate = "${baseDir}/intermediate/"
     params.annote = "${baseDir}/annotated/"
 
@@ -144,7 +145,9 @@ workflow
 			    .combine( file_channel_1, by: 0 )
 			    .transpose( by: 2 )
 			    .map { trimmed, blastn, fasta -> tuple(blastn, fasta)}.view()
-      
+
+     // intermediate_channel = gatherFiles(file_channel_2) | view
+     
      file_channel_fin = performTrim( gatherFiles(file_channel_2) ) | view
 
      cullEmpty(file_channel_fin) | view
