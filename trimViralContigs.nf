@@ -105,7 +105,7 @@ workflow
     blastResults.view { "BlastN Results: ${it}" }
     
     /* Default Intermediate Folders: */
-    params.blastOut = ["/scicomp/home-pure/ydn3/trimViralNF/blastn_output/*.batch_blastn.txt"]
+    params.blastOut = "${baseDir}/blastn_output/*.batch_blastn.txt"
     params.intermediate = "${baseDir}/intermediate/"
     params.annote = "${baseDir}/annotated/"
 
