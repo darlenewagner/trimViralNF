@@ -4,8 +4,8 @@ nextflow.enable.dsl=2
 
 // Assume each contig*.fasta has only one fasta-formatted nucleotide sequence
 
-params.query = "${baseDir}/anonymousContigs/contig*.fasta"    
-params.db = "${baseDir}/blastn_db/poliovirus/MZ245455"
+params.query = "${baseDir}/anonymousContigs/*.fasta"    
+params.db = "${baseDir}/blastn_db/mastadenovirus_A/MN901835"
 
 db_name = file(params.db).name
 db_path = file(params.db).parent

@@ -5,6 +5,12 @@
 
 `source ~/.bash.d/nextflow.bash`
 
+#### Format reference genome of choice
+`makeblastdb -dbtype nucl -in blastn_db/mastadenovirus_A/MN901835.1.fasta -out blastn_db/mastadenovirus_A/MN901835`
+
+##### Repeat for poliovirus/ and norovirus/
+
+
 #### Populate folder for test input, 'anonymousContigs/'
 `perl perl/fillAnonymous.pl test_genomes/polio_sample_10.fasta`
 
