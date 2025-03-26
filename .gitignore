@@ -22,6 +22,7 @@ work/
 
 #Ignore these files:
 .nextflow.log*
+*.fasta
 learn_DSL2/.nextflow.log*
 nextflow*
 blast*
