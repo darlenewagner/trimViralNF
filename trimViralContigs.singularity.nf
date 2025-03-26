@@ -63,7 +63,7 @@ process gatherFiles {
   tuple path(blastn), path(contigs)
   
   output:
-  path "${contigs.simpleName}_annot.more.fasta", emit: annotated
+  path "${blastn.simpleName}_annot.more.fasta", emit: annotated
   
   script:
   """

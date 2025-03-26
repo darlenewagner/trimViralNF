@@ -20,12 +20,16 @@
 `perl perl/removeDemonCharacter.pl < anonymousContigs/contig01.fasta`
 
 
-#### Example with all prerequisites available on server:
+#### Example run after shellSetupWrapper.sh installation:
+##### Mastadenovirus A from test_genomes/
+`nextflow run trimViralContigs.nf`
+
+##### polio_sample_1(0|1) input from test_genomes/Wagner_et_al_poliovirus/
 ` nextflow run trimViralContigs.nf --query "$PWD/anonymousContigs/*.fasta" --db "$PWD/blastn_db/poliovirus/MZ245455" --annote "$PWD/annotated/" --intermediate "$PWD/intermediate/"`
 
 #### Example with blastn and perl implemented through singularity:
 ##### Pull and Build using bash script:
-`./singularitySetupWrapper.sh`
+`./singularityLocalSetup.sh`
 
 ##### Run .singularity.nf version of pipeline
 `nextflow run trimViralContigs.singularity.nf --query "$PWD/anonymousContigs/*.fasta" --db "$PWD/blastn_db/poliovirus/MZ245455" --annote "$PWD/annotated/" --intermediate "$PWD/intermediate/"`
