@@ -5,17 +5,19 @@
 
 `source ~/.bash.d/nextflow.bash`
 
+##### Note: paths to executables in 'moduleWrapper.sh' may need editing
+
 #### Format reference genome of choice
 `makeblastdb -dbtype nucl -in blastn_db/mastadenovirus_A/MN901835.1.fasta -out blastn_db/mastadenovirus_A/MN901835`
 
-##### Repeat for poliovirus/ and norovirus/
+##### Note: repeat for poliovirus/ and norovirus/
 
 
 #### Populate folder for test input, 'anonymousContigs/'
 `perl perl/fillAnonymous.pl test_genomes/polio_sample_10.fasta`
 
-
-##### Note that paths to executables in 'moduleWrapper.sh' may need editing
+#### An additional script is non-ASCII '\r\n' endline remains
+`perl perl/removeDemonCharacter.pl < anonymousContigs/contig01.fasta`
 
 
 #### Example with all prerequisites available on server:

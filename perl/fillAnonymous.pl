@@ -19,23 +19,31 @@ while(<FASTA>)
   if($_ =~ /^>/)
   {
       my $header = $_;
+      #simple remove demon character
+      $header =~ tr/\t\n//d;
+      chomp $header;
 	if($header !~ /^>Contig/i)
 	{
 	    $header =~ s/^(>)/$1Contig/;
 	    print $header, "\n";
-	} 
+	}
+      $header = $header."\n";
       my $cc = index($header, '_') || index($header, '|');
       $name[$i] = substr($header, 1, $cc - 1);
       my $file2 = $name[$i].".fasta";
       $i++;
       open DAT, '>>', "anonymousContigs/$file2" or die "Can't open anonymousContigs/$file2\n";
-      printf DAT $_;
+      printf DAT $header;
      
    }
   elsif($_ =~ /^(A|C|G|T|N)/)
-   {
+  {
+      $_ =~ tr/\t\n//d;
+      chomp;
        printf DAT $_;
    }
 }
+
+printf DAT "\n";
 
 close FASTA;
