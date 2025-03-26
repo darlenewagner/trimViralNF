@@ -1,7 +1,7 @@
 ### Requires nextflow version 23.10.0 or higher
 
 #### Exact path to prerequisites setup
-`./moduleWrapper.sh`
+`./shellSetupWrapper.sh`
 
 `source ~/.bash.d/nextflow.bash`
 
