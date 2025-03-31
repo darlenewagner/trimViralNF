@@ -5,7 +5,7 @@
 
 `source ~/.bash.d/nextflow.bash`
 
-##### Note: paths to executables in 'moduleWrapper.sh' may need editing
+##### Note: paths to executables in *moduleWrapper.sh* may need editing
 
 #### Format reference genome of choice
 `makeblastdb -dbtype nucl -in blastn_db/mastadenovirus_A/MN901835.1.fasta -out blastn_db/mastadenovirus_A/MN901835`
