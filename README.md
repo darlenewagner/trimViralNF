@@ -28,8 +28,11 @@
 ` nextflow run trimViralContigs.nf --query "$PWD/anonymousContigs/*.fasta" --db "$PWD/blastn_db/poliovirus/MZ245455" --annote "$PWD/annotated/" --intermediate "$PWD/intermediate/"`
 
 #### Example with blastn and perl implemented through singularity:
-##### Pull and Build using bash script:
+##### Pull and Build through bash, then call containerized makeblastdb:
 `./singularityLocalSetup.sh`
+
+`singularity exec my_blast.sif makeblastdb -dbtype nucl -in blastn_db/poliovirus/MZ245455.1.fasta -out blastn_db/poliovirus/MZ245455`
+
 
 ##### Run .singularity.nf version of pipeline
 `nextflow run trimViralContigs.localSingularity.nf --query "$PWD/anonymousContigs/*.fasta" --db "$PWD/blastn_db/poliovirus/MZ245455" --annote "$PWD/annotated/" --intermediate "$PWD/intermediate/"`
