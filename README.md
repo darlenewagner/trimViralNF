@@ -12,8 +12,10 @@
 
 `module load nextflow/24.04.2`
 
-##### Pull and Build through bash, then call containerized makeblastdb:
+##### Pull and Build through bash, then call containerized perl and makeblastdb:
 `./singularityLocalSetup.sh`
+
+`singularity exec my_perl.sif perl setup.pl`
 
 `singularity exec my_blast.sif makeblastdb -dbtype nucl -in blastn_db/poliovirus/MZ245455.1.fasta -out blastn_db/poliovirus/MZ245455`
 
