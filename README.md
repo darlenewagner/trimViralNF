@@ -1,6 +1,30 @@
-### Requires nextflow version 23.10.0 or higher
+## trimViralNF: A Trimmer for de novo viral genome assemblies
+- Corrects overassembly beyond length of nearest reference genome
+- Requires nextflow version 23.10.0 or higher
 
-#### Exact path to prerequisites setup
+---
+
+#### Vignette 1: BlastN and perl implemented through singularity, with local Nextflow:
+
+`tar xvf test_genomes.tar`
+
+##### Install Nextflow via HPC module or Miniconda:
+
+`module load nextflow/24.04.2`
+
+##### Pull and Build through bash, then call containerized makeblastdb:
+`./singularityLocalSetup.sh`
+
+`singularity exec my_blast.sif makeblastdb -dbtype nucl -in blastn_db/poliovirus/MZ245455.1.fasta -out blastn_db/poliovirus/MZ245455`
+
+##### Run .singularity.nf version of pipeline
+`nextflow run trimViralContigs.localSingularity.nf --query "$PWD/anonymousContigs/*.fasta" --db "$PWD/blastn_db/poliovirus/MZ245455" --annote "$PWD/annotated/" --intermediate "$PWD/intermediate/"`
+
+---
+
+
+#### Vignette 2: Nextflow, BlastN, and perl implemented through HPC modules
+##### Prerequisites setup from path to local sources
 `./shellSetupWrapper.sh`
 
 `source ~/.bash.d/nextflow.bash`
@@ -27,12 +51,3 @@
 ##### polio_sample_1(0|1) input from test_genomes/Wagner_et_al_poliovirus/
 ` nextflow run trimViralContigs.nf --query "$PWD/anonymousContigs/*.fasta" --db "$PWD/blastn_db/poliovirus/MZ245455" --annote "$PWD/annotated/" --intermediate "$PWD/intermediate/"`
 
-#### Example with blastn and perl implemented through singularity:
-##### Pull and Build through bash, then call containerized makeblastdb:
-`./singularityLocalSetup.sh`
-
-`singularity exec my_blast.sif makeblastdb -dbtype nucl -in blastn_db/poliovirus/MZ245455.1.fasta -out blastn_db/poliovirus/MZ245455`
-
-
-##### Run .singularity.nf version of pipeline
-`nextflow run trimViralContigs.localSingularity.nf --query "$PWD/anonymousContigs/*.fasta" --db "$PWD/blastn_db/poliovirus/MZ245455" --annote "$PWD/annotated/" --intermediate "$PWD/intermediate/"`
